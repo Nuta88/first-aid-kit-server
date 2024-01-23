@@ -1,14 +1,19 @@
-import { Module, } from '@nestjs/common';
+import {
+  Module,
+} from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { JwtService } from "@nestjs/jwt";
-import { ScheduleModule as NestScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ScheduleModule as  NestScheduleModule } from '@nestjs/schedule';
 import { configuration } from '../config/configuration';
 
 import { CategoryModule } from './category/category.module';
+import { MedicineModule } from './medicine/medicine.module';
 import { ConstantlyStoredMedicineModule } from './constantly_stored_medicine/constantly_stored_medicine.module';
 import { EmailService } from './email/email.service';
-import { MedicineModule } from './medicine/medicine.module';
+import { ScheduleModule } from './schedule/schedule.module';
+import { AuthModule } from './auth/auth.module';
+import { RecipientModule } from './recipient/recipient.module';
 import { UserModule } from './user/user.module';
 
 const ENV = process.env.NODE_ENV;
@@ -34,6 +39,10 @@ const ENV = process.env.NODE_ENV;
     CategoryModule,
     MedicineModule,
     ConstantlyStoredMedicineModule,
+    NestScheduleModule,
+    ScheduleModule,
+    AuthModule,
+    RecipientModule,
     UserModule
   ],
   controllers: [],
