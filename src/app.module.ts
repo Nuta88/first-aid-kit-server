@@ -7,6 +7,7 @@ import { configuration } from '../config/configuration';
 
 import { CategoryModule } from './category/category.module';
 import { EmailService } from './email/email.service';
+import { MedicineModule } from './medicine/medicine.module';
 import { UserModule } from './user/user.module';
 
 const ENV = process.env.NODE_ENV;
@@ -30,6 +31,7 @@ const ENV = process.env.NODE_ENV;
       synchronize: false,
     }),
     CategoryModule,
+    MedicineModule,
     UserModule
   ],
   controllers: [],
