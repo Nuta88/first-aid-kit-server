@@ -1,7 +1,7 @@
 import {
   Module,
 } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtService } from "@nestjs/jwt";
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ScheduleModule as  NestScheduleModule } from '@nestjs/schedule';
@@ -15,6 +15,7 @@ import { ScheduleModule } from './schedule/schedule.module';
 import { AuthModule } from './auth/auth.module';
 import { RecipientModule } from './recipient/recipient.module';
 import { UserModule } from './user/user.module';
+import typeorm from './typeOrm/config';
 
 const ENV = process.env.NODE_ENV;
 
@@ -22,19 +23,24 @@ const ENV = process.env.NODE_ENV;
   imports: [
     NestScheduleModule.forRoot(),
     ConfigModule.forRoot({
+      isGlobal: true,
       envFilePath: `${process.cwd()}/config/env/${ENV}.env`,
-      load: [configuration] ,
+      load: [configuration, typeorm]
     }),
+
     TypeOrmModule.forRoot({
       type: 'postgres',
-      database: process.env.DATABASE,
+      database: process.env.DATABASE_NAME,
       host: process.env.DATABASE_HOST,
       port: parseInt(process.env.DATABASE_PORT, 10),
-      username: 'root',
-      password: 'secret',
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
       entities: [],
       autoLoadEntities: true,
       synchronize: false,
+      "migrations": ["dist/migrations/*{.ts,.js}"],
+      "migrationsTableName": "migrations_typeorm",
+      "migrationsRun": true
     }),
     CategoryModule,
     MedicineModule,
