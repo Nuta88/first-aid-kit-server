@@ -1,10 +1,13 @@
 import { Module, } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { JwtService } from "@nestjs/jwt";
 import { ScheduleModule as NestScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { configuration } from '../config/configuration';
 
 import { CategoryModule } from './category/category.module';
+import { EmailService } from './email/email.service';
+import { UserModule } from './user/user.module';
 
 const ENV = process.env.NODE_ENV;
 
@@ -27,8 +30,9 @@ const ENV = process.env.NODE_ENV;
       synchronize: false,
     }),
     CategoryModule,
+    UserModule
   ],
   controllers: [],
-  providers: [],
+  providers: [EmailService, JwtService],
 })
 export class AppModule {}
