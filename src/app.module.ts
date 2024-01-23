@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { configuration } from '../config/configuration';
 
 import { CategoryModule } from './category/category.module';
+import { ConstantlyStoredMedicineModule } from './constantly_stored_medicine/constantly_stored_medicine.module';
 import { EmailService } from './email/email.service';
 import { MedicineModule } from './medicine/medicine.module';
 import { UserModule } from './user/user.module';
@@ -32,6 +33,7 @@ const ENV = process.env.NODE_ENV;
     }),
     CategoryModule,
     MedicineModule,
+    ConstantlyStoredMedicineModule,
     UserModule
   ],
   controllers: [],
