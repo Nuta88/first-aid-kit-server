@@ -1,21 +1,26 @@
-import {
-  IsNumber,
-  IsString,
-  IsNotEmpty,
-  ValidateNested,
-  IsOptional
-} from 'class-validator';
 import { Type } from 'class-transformer';
+import {
+  IsIn,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  Length,
+  ValidateNested
+} from 'class-validator';
 import { CategoryDto } from "../../category/dto/category";
+
 export class CreateConstantlyStoredMedicineDto {
   @IsString()
   @IsNotEmpty()
+  @Length(1, 100)
   readonly name: string;
   @IsString()
   @IsNotEmpty()
-  readonly priority: string;
+  @IsIn(['name', 'category'])
+  readonly priority: 'name' | 'category';
   @IsString()
   @IsOptional()
+  @Length(0, 300)
   readonly description?: string;
   @ValidateNested({ each: true })
   @Type(() => CategoryDto)

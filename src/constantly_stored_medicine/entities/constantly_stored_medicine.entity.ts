@@ -3,19 +3,21 @@ import {
   Column,
   PrimaryGeneratedColumn,
   ManyToMany,
-  JoinTable
+  JoinTable,
+  Check
 } from 'typeorm';
 import { Category } from '../../category/entities/category.entity';
 
 @Entity()
+@Check(`"priority" = ANY(ARRAY['name', 'category']::varchar[])`)
 export class ConstantlyStoredMedicine {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column({ length: 50, nullable: false })
+  @Column({ type: 'varchar', length: 100, nullable: false })
   name: string;
-  @Column()
-  priority: string;
-  @Column()
+  @Column({ type: 'varchar', length: 100, nullable: false })
+  priority: 'name' | 'category';
+  @Column({ type: 'varchar', length: 300, nullable: true })
   description?: string | null;
   
   @ManyToMany(() => Category, (category) => category.medicines, {

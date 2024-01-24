@@ -2,15 +2,17 @@ import {
   Column,
   PrimaryGeneratedColumn,
   ManyToMany,
-  Entity
-} from "typeorm";
-import { Medicine } from "../../medicine/entities/medicine.entity";
+  Entity,
+  Unique
+} from 'typeorm';
+import { Medicine } from '../../medicine/entities/medicine.entity';
 
 @Entity()
+@Unique(['name'])
 export class Category {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column({ unique: true })
+  @Column({ length: 50, nullable: false, unique: true })
   name: string;
   @ManyToMany(() => Medicine, (medicine) => medicine.categories)
   medicines: Medicine[]
