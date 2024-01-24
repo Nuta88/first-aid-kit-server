@@ -11,13 +11,13 @@ import { Category } from '../../category/entities/category.entity';
 export class Medicine {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: string;
-  @Column({ length: 50, nullable: false })
+  @Column({ type: 'varchar', length: 100, nullable: false })
   name: string;
-  @Column({ nullable: false })
+  @Column({ type: 'integer', nullable: false })
   amount: number;
   @Column({ type: 'date', nullable: false })
-  expiration_date: string;
-  @Column()
+  expiration_date: Date;
+  @Column({ type: 'varchar', length: 300, nullable: true })
   description?: string | null;
   
   @ManyToMany(() => Category, (category) => category.medicines, {
