@@ -1,7 +1,7 @@
 import {
   Module,
 } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { JwtService } from "@nestjs/jwt";
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ScheduleModule as  NestScheduleModule } from '@nestjs/schedule';
@@ -13,9 +13,7 @@ import { ConstantlyStoredMedicineModule } from './constantly_stored_medicine/con
 import { EmailService } from './email/email.service';
 import { ScheduleModule } from './schedule/schedule.module';
 import { AuthModule } from './auth/auth.module';
-import { RecipientModule } from './recipient/recipient.module';
 import { UserModule } from './user/user.module';
-import typeorm from './typeOrm/config';
 
 const ENV = process.env.NODE_ENV;
 
@@ -25,7 +23,7 @@ const ENV = process.env.NODE_ENV;
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: `${process.cwd()}/config/env/${ENV}.env`,
-      load: [configuration, typeorm]
+      load: [configuration]
     }),
 
     TypeOrmModule.forRoot({
@@ -38,9 +36,6 @@ const ENV = process.env.NODE_ENV;
       entities: [],
       autoLoadEntities: true,
       synchronize: false,
-      "migrations": ["dist/migrations/*{.ts,.js}"],
-      "migrationsTableName": "migrations_typeorm",
-      "migrationsRun": true
     }),
     CategoryModule,
     MedicineModule,
@@ -48,7 +43,6 @@ const ENV = process.env.NODE_ENV;
     NestScheduleModule,
     ScheduleModule,
     AuthModule,
-    RecipientModule,
     UserModule
   ],
   controllers: [],
