@@ -14,20 +14,15 @@ import { ScheduleModule } from './schedule/schedule.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 
-import { configuration } from '../config/configuration';
 import typeOrmConfig from '../ormconfig';
-
-const ENV = process.env.NODE_ENV;
 
 @Module({
   imports: [
     NestScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: `${process.cwd()}/config/env/${ENV}.env`,
-      load: [configuration]
+      envFilePath: [`.env.${process.env.NODE_ENV}`],
     }),
-  
     TypeOrmModule.forRoot(typeOrmConfig),
     CategoryModule,
     MedicineModule,
