@@ -26,7 +26,6 @@ export class RefreshTokenGuard implements CanActivate {
       );
       request['user'] = {...payload, token};
     } catch(err) {
-      console.log(err, 'lkjkljjklj');
       throw new ForbiddenException('Access Denied');
     }
     return true;
