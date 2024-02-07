@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  fak_db:
+    image: postgres
+    container_name: fak_db
+    environment:
+      POSTGRES_DB: nestjs_fak
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: secret
+    ports:
+      - "5432:5432"
+  fak_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fak_app
+    environment:
+      - NODE_ENV=production
+      - APP_PORT=3002
+      - APP_CLIENT_URL=http://localhost:3000
+      - EMAIL_SENDER_SERVICE=gmail
+      - EMAIL_SENDER_NAME=fak316022@gmail.com
+      - EMAIL_SENDER_PASSWORD='ozht tbkl baif lnxk'
+      - TYPEORM_CONNECTION=postgres
+      - TYPEORM_HOST=fak_db
+      - TYPEORM_USERNAME=root
+      - TYPEORM_PASSWORD=secret
+      - TYPEORM_DATABASE=nestjs_fak
+      - TYPEORM_PORT=5432
+      - TYPEORM_SYNCHRONIZE=false
+      - TYPEORM_LOGGING=true
+      - TYPEORM_ENTITIES=dist/src/**/entities/*.entity.js
+      - TYPEORM_MIGRATIONS=dist/src/database/migrations/*js
+      - TYPEORM_MIGRATIONS_RUN=false
+      - TYPEORM_MIGRATIONS_TABLE_NAME=migrations
+      - JWT_SECRET_KEY=fak.jwt.secret_v2
+      - JWT_REFRESH_SECRET_KEY=fak.jwt.refresh_secret_v2
+      - USE_JSON_LOGGER=false
+    depends_on:
+      - fak_db
+    ports:
+      - "3002:3002"
