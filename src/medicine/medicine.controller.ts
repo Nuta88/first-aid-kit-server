@@ -42,6 +42,11 @@ export class MedicineController {
     return this.medicineService.update(id, data);
   }
   
+  @Post('bulk-update')
+  async bulkUpdate(@Body() data: UpdateMedicineDto[]) {
+    return this.medicineService.bulkUpdate(data);
+  }
+  
   @UseGuards(AuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {

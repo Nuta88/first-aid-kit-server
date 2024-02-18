@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import {
-  Repository
-} from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreateMedicineDto } from './dto/create-medicine.dto';
 import { UpdateMedicineDto } from './dto/update-medicine.dto';
 import { Medicine } from './entities/medicine.entity';
@@ -15,10 +13,7 @@ export class MedicineService {
   ) {}
   async create(medicine: CreateMedicineDto) {
     const newMedicine = await this.medicineRepository.create(medicine);
-    const createdMedicine = await this.medicineRepository.save(newMedicine);
-
-  
-    return createdMedicine;
+    return await this.medicineRepository.save(newMedicine);
   }
 
   async findAll(filter: any): Promise<Medicine[]> {
@@ -67,6 +62,11 @@ export class MedicineService {
     await this.medicineRepository.save(data);
   
     return await this.medicineRepository.findOneBy({ id } );
+  }
+  async bulkUpdate(medicines: UpdateMedicineDto[]) {
+    for (const medicine of medicines) {
+      await this.update(medicine.id, medicine);
+    }
   }
 
   async remove(id: string) {
