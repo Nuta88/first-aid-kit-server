@@ -11,8 +11,7 @@ import { CategoryDto } from "../../category/dto/category";
 
 export class CreateConstantlyStoredMedicineDto {
   @IsString()
-  @IsNotEmpty()
-  @Length(1, 100)
+  @Length(0, 100)
   readonly name: string;
   @IsString()
   @IsNotEmpty()

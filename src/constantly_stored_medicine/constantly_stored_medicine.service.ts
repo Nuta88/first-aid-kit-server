@@ -19,8 +19,10 @@ export class ConstantlyStoredMedicineService {
     @InjectRepository(ConstantlyStoredMedicine)
     private constantlyStoredMedicineRepository: Repository<ConstantlyStoredMedicine>,
   ) {}
+  
   async create(medicine: CreateConstantlyStoredMedicineDto): Promise<ConstantlyStoredMedicine> {
     const newMedicine = await this.constantlyStoredMedicineRepository.create(medicine);
+    
     return await this.constantlyStoredMedicineRepository.save(newMedicine);
   }
   async update(id: number, data: UpdateConstantlyStoredMedicineDto): Promise<ConstantlyStoredMedicine> {
