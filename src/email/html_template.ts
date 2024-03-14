@@ -87,7 +87,7 @@ export const expiredMedicinesTemplate = (expiredMedicines: Medicine[]) => {
         </table>
         <p class="action">
           Click the button below to remove expired medicines:
-          <a class="button" href="${process.env.APP_CLIENT_URL}/expired" target="_blank">First Aid Kit</a>
+          <a class="button" href="${process.env.APP_CLIENT_URL}/medicine/expired" target="_blank">First Aid Kit</a>
         </p>
         </div>`;
   
@@ -112,7 +112,7 @@ export const missingMedicinesTemplate = (missingMedicines: TConstantlyStoredMedi
         </table>
         <p class="action">
           Click the button below to remove expired medicines:
-          <a class="button" href="${process.env.APP_CLIENT_URL}/must-have" target="_blank">First Aid Kit</a>
+          <a class="button" href="${process.env.APP_CLIENT_URL}/medicine/must-have" target="_blank">First Aid Kit</a>
         </p>
         </div>`;
   
