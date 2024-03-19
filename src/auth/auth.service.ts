@@ -26,10 +26,11 @@ export class AuthService {
  secret = this.configService.get<string>('JWT_SECRET_KEY');
  refreshSecret = this.configService.get<string>('JWT_REFRESH_SECRET_KEY');
  
- async signUp(data: CreateUserDto) {
+ async signup(data: CreateUserDto) {
    await this.isUserExist(data);
-   
-   const user = await this.usersService.create(data);
+  
+   const hash = await this.hashData(data.password);
+   const user = await this.usersService.create({...data, password: hash });
    const tokens = await this.getTokens(user.id, user.email);
   
    return {...tokens, user };
@@ -51,11 +52,12 @@ export class AuthService {
   
   async validateUser(email: string, pass: string): Promise<any> {
     const user = await this.usersService.findByEmail(email);
+    const passwordMatches = await argon2.verify(user.password, pass);
   
     if (!user) throw new BadRequestException('User does not exist');
   
   
-    if (user?.password !== pass) throw new UnauthorizedException();
+    if (!passwordMatches) throw new UnauthorizedException();
     
     return user;
   }

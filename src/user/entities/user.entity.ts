@@ -15,8 +15,8 @@ export class User {
   @Column({ type: 'varchar', length: 50, nullable: false })
   @IsNotEmpty({ message: 'The last name is required' })
   last_name: string;
-  @Column({ type: 'varchar', length: 50, nullable: false })
-  @Length(6, 50, { message: 'The password must be at least 6 but not longer than 30 characters' })
+  @Column({ type: 'varchar', length: 255, nullable: false })
+  @Length(6, 255, { message: 'The password must be at least 6 but not longer than 30 characters' })
   @IsNotEmpty({ message: 'The password is required' })
   password: string;
   @Column({ type: 'varchar', length: 255, nullable: false, unique: true })

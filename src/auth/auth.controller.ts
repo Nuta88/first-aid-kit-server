@@ -20,7 +20,7 @@ export class AuthController {
   
   @Post('signup')
   signup(@Body() data: CreateUserDto) {
-    return this.authService.signUp(data);
+    return this.authService.signup(data);
   }
   
   @HttpCode(HttpStatus.OK)
